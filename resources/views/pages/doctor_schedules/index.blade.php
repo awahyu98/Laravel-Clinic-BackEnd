@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'doctors')
+@section('title', 'Doctor Scheduels')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,14 +11,14 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Doctor</h1>
+                <h1>Doctor Schedule</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('doctors.create') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ route('doctor-schedules.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                     <div class="breadcrumb-item"><a href="#">Doctor</a></div>
-                    <div class="breadcrumb-item">All Doctor</div>
+                    <div class="breadcrumb-item">All Doctor Schedule</div>
                 </div>
             </div>
             <div class="section-body">
@@ -27,10 +27,11 @@
                         @include('layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Doctor</h2>
+                <h2 class="section-title">Doctors</h2>
                 <p class="section-lead">
                     You can manage all Users, such as editing, deleting and more.
                 </p>
+
 
                 <div class="row mt-4">
                     <div class="col-12">
@@ -41,7 +42,7 @@
                             <div class="card-body">
 
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('doctors.index') }}">
+                                    <form method="GET" action="{{ route('doctor-schedules.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -58,53 +59,38 @@
                                         <tr>
 
                                             <th>Name</th>
-                                            <th>Specialist</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Sip</th>
-                                            <th>Address</th>
-                                            <th>Photo</th>
+                                            <th>Day</th>
+                                            <th>Time</th>
+                                            <th>Note</th>
+
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($doctors as $doctor)
+                                        @foreach ($doctorSchedules as $schedule)
                                             <tr>
+                                                <td>
+                                                    {{ $schedule->doctor->doctor_name }}
+                                                </td>
+                                                <td>{{ $schedule->day }}
+                                                </td>
+                                                <td>
+                                                    {{ $schedule->time }}
+                                                </td>
+                                                <td>
+                                                    {{ $schedule->note }}
+                                                </td>
 
-                                                <td>{{ $doctor->doctor_name }}
-                                                </td>
-                                                <td>
-                                                    {{ $doctor->doctor_specialist }}
-                                                </td>
-                                                <td>
-                                                    {{ $doctor->doctor_email }}
-                                                </td>
-                                                <td>
-                                                    {{ $doctor->doctor_phone }}
-                                                </td>
-                                                <td>
-                                                    {{ $doctor->sip }}
-                                                </td>
-                                                <td>
-                                                    {{ $doctor->address }}
-                                                </td>
-                                                <td>
-                                                    @if ($doctor->photo)
-                                                        <img src="{{ asset(''.$doctor->photo) }}"
-                                                        alt="" width="100px" class="img-thumbnail">
-                                                        @else
-                                                        <span class="badger badge-danger">No Image</span>
-                                                    @endif
-                                                </td>
 
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href='{{ route('doctors.edit', $doctor->id) }}'
+                                                        <a href='{{ route('doctor-schedules.edit', $schedule->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
                                                             <i class="fas fa-edit"></i>
                                                             Edit
                                                         </a>
 
-                                                        <form action="{{ route('doctors.destroy', $doctor->id) }}" method="POST"
-                                                            class="ml-2">
+                                                        <form
+                                                            action="{{ route('doctor-schedules.destroy', $schedule->id) }}"
+                                                            method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE" />
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}" />
@@ -121,7 +107,7 @@
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $doctors->withQueryString()->links() }}
+                                    {{ $doctorSchedules->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>

@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'bahri@fic15.com',
+            'email' => 'wahyu@fic15.com',
             'role' => 'admin',
             'password' => Hash::make('12345678'),
             'phone' => '1234567890',
@@ -30,15 +30,19 @@ class DatabaseSeeder extends Seeder
 
         //seeder profile_clinics manual
         \App\Models\ProfileClinic::factory()->create([
-            'name' => 'Klinik Bahri',
-            'address' => 'Jl. Raya Ciputat Parung No. 1',
+            'name' => 'Klinik Tong Fang',
+            'address' => 'Jl. Raya Kuat Sehat Selalu',
             'phone' => '1234567890',
-            'email' => 'dr.bahri@klinik.com',
-            'doctor_name' => 'Dr. Bahri',
+            'email' => 'dr.kuat@klinik.com',
+            'doctor_name' => 'Dr. Kuat',
             'unique_code' => '123456',
         ]);
 
-        //call
-        $this->call(DoctorSeeder::class);
+         //call
+         $this->call([
+            DoctorSeeder::class,
+            DoctorScheduleSeeder::class,
+            PatientSeeder::class,
+        ]);
     }
 }
